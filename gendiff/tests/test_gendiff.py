@@ -7,14 +7,20 @@ from os import sep
 FIXTURE_PATH = sys.path[0] + sep + 'fixtures' + sep
 
 
-def copy_files(tmpdir_factory, file1, file2, extension):
+def copy_file(temp_dir, extension, fixture_path):
+    """Copy one file."""
+    file_name = fixture_path.split(sep)[-1].split('.')[0]
+    new_file_path = temp_dir.join(file_name + '.' + extension)
+    copy2(fixture_path, new_file_path)
+    return new_file_path
+
+
+def copy_files(tmpdir_factory, extension, *args):
     """Copy fixtures."""
     temp_dir = tmpdir_factory.mktemp('data')
-    file_path1 = temp_dir.join('1.' + extension)
-    copy2(file1, file_path1)
-    file_path2 = temp_dir.join('2.' + extension)
-    copy2(file2, file_path2)
-    return [file_path1, file_path2]
+    return [
+        copy_file(temp_dir, extension, file_path) for file_path in args
+    ]
 
 
 @pytest.fixture()
@@ -22,10 +28,25 @@ def copy_json_files(tmpdir_factory):
     """Copy json files."""
     return copy_files(
         tmpdir_factory,
+        'json',
         FIXTURE_PATH + '1_1.json',
         FIXTURE_PATH + '1_2.json',
-        'json'
+        FIXTURE_PATH + '3_1.json',
+        FIXTURE_PATH + '3_2.json'
     )
+
+
+def test_generate_diff_json(copy_json_files):
+    """Test diff json files."""
+    file_paths = copy_json_files
+    result_path = FIXTURE_PATH + '1_3.txt'
+    with open(result_path, 'r') as opened_file1:
+        result_string = opened_file1.read()
+        assert generate_diff(file_paths[0], file_paths[1]) == result_string
+    result_path = FIXTURE_PATH + '3_3.txt'
+    with open(result_path, 'r') as opened_file3:
+        result_string = opened_file3.read()
+        assert generate_diff(file_paths[2], file_paths[3]) == result_string
 
 
 @pytest.fixture()
@@ -33,65 +54,22 @@ def copy_yaml_files(tmpdir_factory):
     """Copy yaml files."""
     return copy_files(
         tmpdir_factory,
+        'yaml',
         FIXTURE_PATH + '2_1.yaml',
         FIXTURE_PATH + '2_2.yaml',
-        'yaml'
-    )
-
-
-@pytest.fixture()
-def copy_json_files2(tmpdir_factory):
-    """Copy json files."""
-    return copy_files(
-        tmpdir_factory,
-        FIXTURE_PATH + '3_1.json',
-        FIXTURE_PATH + '3_2.json',
-        'json'
-    )
-
-
-@pytest.fixture()
-def copy_yaml_files2(tmpdir_factory):
-    """Copy yaml files2."""
-    return copy_files(
-        tmpdir_factory,
         FIXTURE_PATH + '4_1.yaml',
-        FIXTURE_PATH + '4_2.yaml',
-        'yaml'
+        FIXTURE_PATH + '4_2.yaml'
     )
-
-
-def test_generate_diff_json(copy_json_files):
-    """Test diff json files."""
-    file_path1, file_path2 = copy_json_files
-    result_path = FIXTURE_PATH + '1_3.txt'
-    with open(result_path, 'r') as opened_file:
-        result_string = opened_file.read()
-    assert generate_diff(file_path1, file_path2) == result_string
 
 
 def test_generate_diff_yaml(copy_yaml_files):
     """Test diff yaml files."""
-    file_path1, file_path2 = copy_yaml_files
+    file_paths = copy_yaml_files
     result_path = FIXTURE_PATH + '1_3.txt'
-    with open(result_path, 'r') as opened_file:
-        result_string = opened_file.read()
-    assert generate_diff(file_path1, file_path2) == result_string
-
-
-def test_generate_diff_json2(copy_json_files2):
-    """Test diff json files2."""
-    file_path1, file_path2 = copy_json_files2
+    with open(result_path, 'r') as opened_file1:
+        result_string = opened_file1.read()
+        assert generate_diff(file_paths[0], file_paths[1]) == result_string
     result_path = FIXTURE_PATH + '3_3.txt'
-    with open(result_path, 'r') as opened_file:
-        result_string = opened_file.read()
-    assert generate_diff(file_path1, file_path2) == result_string
-
-
-def test_generate_diff_yaml2(copy_yaml_files2):
-    """Test diff yaml files2."""
-    file_path1, file_path2 = copy_yaml_files2
-    result_path = FIXTURE_PATH + '3_3.txt'
-    with open(result_path, 'r') as opened_file:
-        result_string = opened_file.read()
-    assert generate_diff(file_path1, file_path2) == result_string
+    with open(result_path, 'r') as opened_file3:
+        result_string = opened_file3.read()
+        assert generate_diff(file_paths[2], file_paths[3]) == result_string
