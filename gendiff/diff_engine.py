@@ -1,25 +1,23 @@
-"""JSON gendiff."""
-import json
+"""JSON and YAML gendiff."""
+from gendiff.parser import parser
 
 
 def generate_diff(file1, file2):
     """Run gendiff."""
     diff = '{\n'
-    with open(file1) as open_file1:
-        with open(file2) as open_file2:
-            json1 = json.load(open_file1)
-            json2 = json.load(open_file2)
-            for key in sorted(json1.keys() | json2.keys()):
-                if key in json1.keys():
-                    if key in json2.keys():
-                        if json1[key] == json2[key]:
-                            diff += '    {0}: {1}\n'.format(key, json1[key])
-                        else:
-                            diff += '  - {0}: {1}\n'.format(key, json1[key])
-                            diff += '  + {0}: {1}\n'.format(key, json2[key])
-                    else:
-                        diff += '  - {0}: {1}\n'.format(key, json1[key])
+    dict1 = parser(file1)
+    dict2 = parser(file2)
+    for key in sorted(dict1.keys() | dict2.keys()):
+        if key in dict1.keys():
+            if key in dict2.keys():
+                if dict1[key] == dict2[key]:
+                    diff += '    {0}: {1}\n'.format(key, dict1[key])
                 else:
-                    diff += '  + {0}: {1}\n'.format(key, json2[key])
+                    diff += '  - {0}: {1}\n'.format(key, dict1[key])
+                    diff += '  + {0}: {1}\n'.format(key, dict2[key])
+            else:
+                diff += '  - {0}: {1}\n'.format(key, dict1[key])
+        else:
+            diff += '  + {0}: {1}\n'.format(key, dict2[key])
     diff += '}'
     return diff

@@ -423,7 +423,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 name = "pyyaml"
 version = "5.4.1"
 description = "YAML parser and emitter for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
@@ -534,7 +534,7 @@ typing_extensions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f3f072e27e29a72c463954c81c93a2e40b0f80d835ff2fafa9933792b7674483"
+content-hash = "58c22cf0d54288f8742dc166b3a5c4690832f1ffe092f43539832bcd9379b4e0"
 
 [metadata.files]
 astor = [
