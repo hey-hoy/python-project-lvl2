@@ -1,23 +1,33 @@
 """JSON and YAML gendiff."""
 from gendiff.parser import parser
+from gendiff.formatter import stylish
 
 
-def generate_diff(file1, file2):
+def dict_nodes_diff(node1, node2):
+    """Return dictionary with difference of 2 dictionaries."""
+    result_dict = {}
+    for key in sorted(node1.keys() | node2.keys()):
+        result_dict[key] = {}
+        if key in node1.keys() & node2.keys():
+            value1 = node1[key]
+            value2 = node2[key]
+            if isinstance(value1, dict) and isinstance(value2, dict):
+                result_dict[key] = dict_nodes_diff(value1, value2)
+            elif value1 == value2:
+                result_dict[key]['hold'] = value1
+            else:
+                result_dict[key]['del'] = value1
+                result_dict[key]['add'] = value2
+        elif key in node1.keys():
+            result_dict[key]['del'] = node1[key]
+        else:
+            result_dict[key]['add'] = node2[key]
+    return result_dict
+
+
+def generate_diff(file1, file2, formatter=stylish):
     """Run gendiff."""
-    diff = '{\n'
     dict1 = parser(file1)
     dict2 = parser(file2)
-    for key in sorted(dict1.keys() | dict2.keys()):
-        if key in dict1.keys():
-            if key in dict2.keys():
-                if dict1[key] == dict2[key]:
-                    diff += '    {0}: {1}\n'.format(key, dict1[key])
-                else:
-                    diff += '  - {0}: {1}\n'.format(key, dict1[key])
-                    diff += '  + {0}: {1}\n'.format(key, dict2[key])
-            else:
-                diff += '  - {0}: {1}\n'.format(key, dict1[key])
-        else:
-            diff += '  + {0}: {1}\n'.format(key, dict2[key])
-    diff += '}'
-    return diff
+    diff = dict_nodes_diff(dict1, dict2)
+    return formatter(diff)
