@@ -2,6 +2,7 @@
 import pytest
 from gendiff.diff_engine import generate_diff
 from shutil import copy2
+import sys
 
 
 def copy_files(tmpdir_factory, file1, file2, extension):
@@ -19,8 +20,8 @@ def copy_json_files(tmpdir_factory):
     """Copy json files."""
     return copy_files(
         tmpdir_factory,
-        r'gendiff\tests\fixtures\1_1.json',
-        r'gendiff\tests\fixtures\1_2.json',
+        sys.path[0] + r'\fixtures\1_1.json',
+        sys.path[0] + r'\fixtures\1_2.json',
         'json'
     )
 
@@ -30,8 +31,8 @@ def copy_yaml_files(tmpdir_factory):
     """Copy yaml files."""
     return copy_files(
         tmpdir_factory,
-        r'gendiff\tests\fixtures\2_1.yaml',
-        r'gendiff\tests\fixtures\2_2.yaml',
+        sys.path[0] + r'\fixtures\2_1.yaml',
+        sys.path[0] + r'\fixtures\2_2.yaml',
         'yaml'
     )
 
@@ -39,7 +40,7 @@ def copy_yaml_files(tmpdir_factory):
 def test_generate_diff_json(copy_json_files):
     """Test diff json files."""
     file_path1, file_path2 = copy_json_files
-    result_path = r'gendiff\tests\fixtures\1_3.txt'
+    result_path = sys.path[0] + r'\fixtures\1_3.txt'
     with open(result_path, 'r') as opened_file:
         result_string = opened_file.read()
     assert generate_diff(file_path1, file_path2) == result_string
@@ -48,7 +49,7 @@ def test_generate_diff_json(copy_json_files):
 def test_generate_diff_yaml(copy_yaml_files):
     """Test diff yaml files."""
     file_path1, file_path2 = copy_yaml_files
-    result_path = r'gendiff\tests\fixtures\1_3.txt'
+    result_path = sys.path[0] + r'\fixtures\1_3.txt'
     with open(result_path, 'r') as opened_file:
         result_string = opened_file.read()
     assert generate_diff(file_path1, file_path2) == result_string
