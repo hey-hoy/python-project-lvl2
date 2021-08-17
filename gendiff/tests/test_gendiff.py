@@ -5,6 +5,7 @@ from shutil import copy2
 import sys
 from os import sep
 from gendiff.formatter.plain import plain
+from gendiff.formatter.json_formatter import json
 FIXTURE_PATH = sys.path[0] + sep + 'gendiff' + sep + 'tests' + sep + 'fixtures' + sep
 
 
@@ -48,14 +49,22 @@ def test_generate_diff_json(copy_json_files):
     with open(result_path, 'r') as opened_file2:
         result_string = opened_file2.read()
         assert generate_diff(file_paths[0], file_paths[1], plain) == result_string
-    result_path = FIXTURE_PATH + '3_3.txt'
+    result_path = FIXTURE_PATH + '1_5.txt'
     with open(result_path, 'r') as opened_file3:
         result_string = opened_file3.read()
-        assert generate_diff(file_paths[2], file_paths[3]) == result_string
-    result_path = FIXTURE_PATH + '3_4.txt'
+        assert generate_diff(file_paths[0], file_paths[1], json) == result_string
+    result_path = FIXTURE_PATH + '3_3.txt'
     with open(result_path, 'r') as opened_file4:
         result_string = opened_file4.read()
+        assert generate_diff(file_paths[2], file_paths[3]) == result_string
+    result_path = FIXTURE_PATH + '3_4.txt'
+    with open(result_path, 'r') as opened_file5:
+        result_string = opened_file5.read()
         assert generate_diff(file_paths[2], file_paths[3], plain) == result_string
+    result_path = FIXTURE_PATH + '3_5.txt'
+    with open(result_path, 'r') as opened_file6:
+        result_string = opened_file6.read()
+        assert generate_diff(file_paths[2], file_paths[3], json) == result_string
 
 
 @pytest.fixture()
@@ -82,11 +91,19 @@ def test_generate_diff_yaml(copy_yaml_files):
     with open(result_path, 'r') as opened_file2:
         result_string = opened_file2.read()
         assert generate_diff(file_paths[0], file_paths[1], plain) == result_string
-    result_path = FIXTURE_PATH + '3_3.txt'
+    result_path = FIXTURE_PATH + '1_5.txt'
     with open(result_path, 'r') as opened_file3:
         result_string = opened_file3.read()
-        assert generate_diff(file_paths[2], file_paths[3]) == result_string
-    result_path = FIXTURE_PATH + '3_4.txt'
+        assert generate_diff(file_paths[0], file_paths[1], json) == result_string
+    result_path = FIXTURE_PATH + '3_3.txt'
     with open(result_path, 'r') as opened_file4:
         result_string = opened_file4.read()
+        assert generate_diff(file_paths[2], file_paths[3]) == result_string
+    result_path = FIXTURE_PATH + '3_4.txt'
+    with open(result_path, 'r') as opened_file5:
+        result_string = opened_file5.read()
         assert generate_diff(file_paths[2], file_paths[3], plain) == result_string
+    result_path = FIXTURE_PATH + '3_5.txt'
+    with open(result_path, 'r') as opened_file6:
+        result_string = opened_file6.read()
+        assert generate_diff(file_paths[2], file_paths[3], json) == result_string
