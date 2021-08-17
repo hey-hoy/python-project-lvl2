@@ -47,4 +47,4 @@ def dict_node_plain_formatter(node, node_name='', cur_path=''):
 
 def plain(diff_dict):
     """Make plain diff from dictionary with difference of 2 dictionaries."""
-    return dict_node_plain_formatter(diff_dict)
+    return dict_node_plain_formatter(diff_dict)[:-1]
