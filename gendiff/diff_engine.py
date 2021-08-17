@@ -1,6 +1,8 @@
 """JSON and YAML gendiff."""
 from gendiff.parser import parser
 from gendiff.formatter.stylish import stylish
+from gendiff.formatter.plain import plain
+from gendiff.formatter.json_formatter import json
 
 
 def dict_nodes_diff(node1, node2):
@@ -30,4 +32,10 @@ def generate_diff(file1, file2, formatter=stylish):
     dict1 = parser(file1)
     dict2 = parser(file2)
     diff = dict_nodes_diff(dict1, dict2)
+    if formatter == 'stylish':
+        formatter = stylish
+    if formatter == 'plain':
+        formatter = plain
+    if formatter == 'json':
+        formatter = json
     return formatter(diff)
