@@ -49,4 +49,6 @@ def dict_node_stylish(node, node_name='', cur_tab=''):
 
 def stylish(diff_dict):
     """Make styled string from dictionary with difference of 2 dictionaries."""
+    if dict_node_stylish(diff_dict) == '':
+        return '----------------------------\n'
     return '{\n' + dict_node_stylish(diff_dict).replace(',\n', '\n') + '}'
