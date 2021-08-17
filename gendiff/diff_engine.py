@@ -1,6 +1,6 @@
 """JSON and YAML gendiff."""
 from gendiff.parser import parser
-from gendiff.formatter import stylish
+from gendiff.formatter.stylish import stylish
 
 
 def dict_nodes_diff(node1, node2):

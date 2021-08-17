@@ -1,4 +1,4 @@
-"""JSON and YAML parser."""
+"""Stylish formatter."""
 import json
 
 
@@ -8,6 +8,12 @@ def format_dict(element, tabulation):
         form_dict = json.dumps(element, indent=4)
         form_dict = form_dict.replace('\n', '\n' + tabulation)
         return form_dict.replace('\"', '')
+    if isinstance(element, bool):
+        if element:
+            return 'true'
+        return 'false'
+    if element is None:
+        return 'null'
     return str(element)
 
 

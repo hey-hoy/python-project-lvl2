@@ -1,7 +1,7 @@
 """Script to start gendiff."""
 import argparse
 from gendiff.diff_engine import generate_diff
-from gendiff.formatter import stylish
+from gendiff.formatter.stylish import stylish
 
 
 def main():
