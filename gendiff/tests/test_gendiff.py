@@ -41,10 +41,10 @@ def copy_json_files(tmpdir_factory):
 def test_generate_diff_json(copy_json_files):
     """Test diff json files."""
     file_paths = copy_json_files
-    result_path = FIXTURE_PATH + '1_3.txt'
+    result_path = FIXTURE_PATH + '1_6.txt'
     with open(result_path, 'r') as opened_file1:
         result_string = opened_file1.read()
-        assert generate_diff(file_paths[0], file_paths[1]) == result_string
+        assert generate_diff(file_paths[1], file_paths[0]) == result_string
     result_path = FIXTURE_PATH + '1_4.txt'
     with open(result_path, 'r') as opened_file2:
         result_string = opened_file2.read()

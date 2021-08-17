@@ -38,10 +38,4 @@ def generate_diff(file1, file2, formatter=stylish):
         formatter = plain
     if formatter == 'json':
         formatter = json
-    if formatter(diff) == '':
-        with open(file1, 'r') as opened_file1:
-            result_string = opened_file1.read()
-        with open(file2, 'r') as opened_file2:
-            result_string += '----------------------------\n' + opened_file2.read()
-        return result_string
     return formatter(diff)
