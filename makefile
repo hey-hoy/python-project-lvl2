@@ -1,5 +1,5 @@
 gendiff:
-	poetry run gendiff "$@"
+	poetry run gendiff $1 $2 $ 3
 
 install:
 	poetry install
