@@ -1,5 +1,5 @@
 gendiff:
-	@poetry run gendiff $(filter-out $@,$@(MAKECMDGOALS))
+	@poetry run gendiff $(filter-out $@,$(@MAKECMDGOALS))
 
 install:
 	poetry install
