@@ -1,5 +1,6 @@
 """Script to start gendiff."""
 import argparse
+import sys
 from pathlib import Path
 from gendiff import generate_diff
 from gendiff import stylish
@@ -11,6 +12,7 @@ def main():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', help='set format of output')
+    print(sys.argv)
     args = parser.parse_args()
     first_file = Path(args.first_file).resolve()
     second_file = Path(args.second_file).resolve()
