@@ -1,5 +1,5 @@
 gendiff:
-	poetry run gendiff $1 $2 $ 3
+	poetry run gendiff.scripts.gendiff:main "$@"
 
 install:
 	poetry install
