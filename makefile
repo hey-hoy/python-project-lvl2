@@ -19,4 +19,4 @@ lint:
 test:
 	poetry run pytest
 
-.PHONY: install test lint selfcheck check build
+.PHONY: gendiff install test lint selfcheck check build
