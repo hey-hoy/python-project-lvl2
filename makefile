@@ -1,5 +1,5 @@
 gendiff:
-	poetry run gendiff $@
+	poetry run gendiff $(filter-out $@,$(MAKECMDGOALS))
 
 install:
 	poetry install
@@ -19,4 +19,6 @@ lint:
 test:
 	poetry run pytest
 
+%:
+	@:
 .PHONY: gendiff install test lint selfcheck check build
