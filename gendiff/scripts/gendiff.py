@@ -12,7 +12,6 @@ def main():
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
-    print(args)
     first_file = Path(args.first_file).resolve()
     second_file = Path(args.second_file).resolve()
     if args.format:

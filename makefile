@@ -1,5 +1,5 @@
 gendiff:
-	poetry run gendiff
+	poetry run gendiff $(ARGS)
 
 install:
 	poetry install
