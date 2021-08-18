@@ -14,6 +14,7 @@ def main():
     args = parser.parse_args()
     first_file = Path(args.first_file).resolve()
     second_file = Path(args.second_file).resolve()
+    print(first_file)
     if args.format:
         print(generate_diff(first_file, second_file, args.format))
     else:
