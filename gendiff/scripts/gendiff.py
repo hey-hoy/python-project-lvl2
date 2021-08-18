@@ -1,6 +1,5 @@
 """Script to start gendiff."""
 import argparse
-import sys
 from pathlib import Path
 from gendiff import generate_diff
 from gendiff import stylish

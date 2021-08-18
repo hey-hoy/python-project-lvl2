@@ -20,5 +20,9 @@ test:
 	poetry run pytest
 
 %:
-	@:
+	@echo
+
+@:
+	@echo
+
 .PHONY: gendiff install test lint selfcheck check build
