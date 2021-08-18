@@ -1,5 +1,5 @@
 gendiff:
-	poetry run gendiff.scripts.gendiff:main "$@"
+	@echo poetry run gendiff $(filter-out $@,$(MAKECMDGOALS))
 
 install:
 	poetry install
