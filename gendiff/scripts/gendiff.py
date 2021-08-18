@@ -5,16 +5,17 @@ from gendiff import generate_diff
 from gendiff import stylish
 
 
-def main():
+def main(*args):
     """Run gendiff."""
     parser = argparse.ArgumentParser(description='Generate diff')
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', help='set format of output')
+    print(args)
     args = parser.parse_args()
+    print(args)
     first_file = Path(args.first_file).resolve()
     second_file = Path(args.second_file).resolve()
-    print(first_file)
     if args.format:
         print(generate_diff(first_file, second_file, args.format))
     else:
@@ -22,4 +23,5 @@ def main():
 
 
 if __name__ == '__main__':
+
     main()
